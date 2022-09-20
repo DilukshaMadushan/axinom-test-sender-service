@@ -1,18 +1,20 @@
 import express, { Application, Request, Response } from "express";
+import fileUpload from "express-fileupload";
+import { router } from "./routes/unzip.route";
+import { login } from "./services/auth.service";
 
 const app: Application = express();
 const port: number = 5000;
 
+//Accept json
 app.use(express.json());
+//File upload
+app.use(fileUpload());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("hello");
-});
+//Authenticate with receiver app
+login();
 
-app.post("/api", (req: Request, res: Response) => {
-  console.log(req.body);
-  res.send("Hello Post");
-});
+app.use("/api/v1", router);
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
