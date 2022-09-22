@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.unZip = void 0;
 const jszip_1 = __importDefault(require("jszip"));
+//@desc         Extract zip file
 const unZip = (zipFile) => __awaiter(void 0, void 0, void 0, function* () {
     const unzipper = new jszip_1.default();
     const result = yield unzipper.loadAsync(zipFile);
@@ -39,6 +40,7 @@ const unZip = (zipFile) => __awaiter(void 0, void 0, void 0, function* () {
     return unZippedDataJson;
 });
 exports.unZip = unZip;
+//@desc         Convert Object to json
 const objectToJson = (object, isDir) => __awaiter(void 0, void 0, void 0, function* () {
     const jsonObj = {
         name: "",

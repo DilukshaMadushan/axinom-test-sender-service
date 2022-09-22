@@ -1,7 +1,7 @@
 import jszip from "jszip";
 import { logger } from "../utils/logger.util";
-import fs from "fs";
 
+//@desc         Extract zip file
 const unZip = async (zipFile: any) => {
   const unzipper: jszip = new jszip();
   const result: any = await unzipper.loadAsync(zipFile);
@@ -33,6 +33,7 @@ const unZip = async (zipFile: any) => {
 
 export { unZip };
 
+//@desc         Convert Object to json
 const objectToJson = async (object: any, isDir: boolean) => {
   const jsonObj = {
     name: "",

@@ -17,6 +17,7 @@ const axios_1 = __importDefault(require("axios"));
 const logger_util_1 = require("../utils/logger.util");
 let token;
 exports.token = token;
+//@desc    Authenticate with receiver app
 const login = () => __awaiter(void 0, void 0, void 0, function* () {
     const body = {
         name: process.env.USER_NAME || "Diluksha",

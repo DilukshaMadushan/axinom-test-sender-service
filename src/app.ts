@@ -2,9 +2,13 @@ import express, { Application, Request, Response } from "express";
 import fileUpload from "express-fileupload";
 import { router } from "./routes/unzip.route";
 import { login } from "./services/auth.service";
+import * as dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
 
 const app: Application = express();
-const port: number = 5000;
+const port: any = process.env.PORT || 5000;
 
 //Accept json
 app.use(express.json());

@@ -16,6 +16,7 @@ exports.callReceiver = void 0;
 const axios_1 = __importDefault(require("axios"));
 const logger_util_1 = require("../utils/logger.util");
 const auth_service_1 = require("./auth.service");
+//@desc         Call receiver API
 const callReceiver = (body) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield axios_1.default.post(process.env.RECEIVER_UPLOAD_URL ||
@@ -29,7 +30,7 @@ const callReceiver = (body) => __awaiter(void 0, void 0, void 0, function* () {
         return response.status;
     }
     catch (error) {
-        logger_util_1.logger.error("Error occured while calling receiver app, ", error.message);
+        logger_util_1.logger.error("Error occured while calling receiver app");
         return 500;
     }
 });

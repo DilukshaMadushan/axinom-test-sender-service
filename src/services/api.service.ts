@@ -2,6 +2,7 @@ import axios from "axios";
 import { logger } from "../utils/logger.util";
 import { token } from "./auth.service";
 
+//@desc         Call receiver API
 const callReceiver = async (body: any) => {
   try {
     const response = await axios.post(
@@ -18,7 +19,7 @@ const callReceiver = async (body: any) => {
     logger.info(response.data.data);
     return response.status;
   } catch (error: any) {
-    logger.error("Error occured while calling receiver app, ", error.message);
+    logger.error("Error occured while calling receiver app");
     return 500;
   }
 };

@@ -3,6 +3,8 @@ import { unZip } from "../services/unzip.service";
 import { callReceiver } from "../services/api.service";
 import { login } from "../services/auth.service";
 
+//@desc         Extract zip file and send data
+//@route        POST /api/v1/uploadzip
 const extractZipFile = async (
   req: Request,
   res: Response,
@@ -29,7 +31,7 @@ const extractZipFile = async (
   output.zipFiles = outputArr;
   let resCode: number;
   resCode = await callReceiver(output);
-  if (resCode == 401) {
+  if (resCode != 200) {
     await login();
     resCode = await callReceiver(output);
   }
@@ -43,7 +45,7 @@ const extractZipFile = async (
   } else {
     res.status(resCode).json({
       success: false,
-      data: "Operation Failed",
+      data: `Operation Failed ${resCode}`,
     });
   }
 };

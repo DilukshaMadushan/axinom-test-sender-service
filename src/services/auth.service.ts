@@ -3,6 +3,7 @@ import { logger } from "../utils/logger.util";
 
 let token: string;
 
+//@desc    Authenticate with receiver app
 const login = async () => {
   const body = {
     name: process.env.USER_NAME || "Diluksha",

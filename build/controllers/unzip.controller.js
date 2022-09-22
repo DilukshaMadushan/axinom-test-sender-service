@@ -13,6 +13,8 @@ exports.extractZipFile = void 0;
 const unzip_service_1 = require("../services/unzip.service");
 const api_service_1 = require("../services/api.service");
 const auth_service_1 = require("../services/auth.service");
+//@desc         Extract zip file and send data
+//@route        POST /api/v1/uploadzip
 const extractZipFile = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let files = req.files;
     let fileArr;
@@ -27,7 +29,6 @@ const extractZipFile = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         uploadOwner: req.body.uploadOwner,
         zipFiles: [],
     };
-    console.log(files);
     for (let zipFile of fileArr) {
         const unZuppedRes = yield (0, unzip_service_1.unZip)(zipFile.data);
         outputArr.push(unZuppedRes);
@@ -35,7 +36,7 @@ const extractZipFile = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     output.zipFiles = outputArr;
     let resCode;
     resCode = yield (0, api_service_1.callReceiver)(output);
-    if (resCode == 401) {
+    if (resCode != 200) {
         yield (0, auth_service_1.login)();
         resCode = yield (0, api_service_1.callReceiver)(output);
     }
@@ -49,7 +50,7 @@ const extractZipFile = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     else {
         res.status(resCode).json({
             success: false,
-            data: "Operation Failed",
+            data: `Operation Failed ${resCode}`,
         });
     }
 });
