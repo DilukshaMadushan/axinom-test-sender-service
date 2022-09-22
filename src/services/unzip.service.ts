@@ -1,5 +1,6 @@
 import jszip from "jszip";
 import { logger } from "../utils/logger.util";
+import fs from "fs";
 
 const unZip = async (zipFile: any) => {
   const unzipper: jszip = new jszip();
@@ -17,7 +18,7 @@ const unZip = async (zipFile: any) => {
     const item: any = result.files[key];
 
     if (!item.dir) {
-      fileArr.push(objectToJson(item, item.dir));
+      fileArr.push(await objectToJson(item, item.dir));
     } else {
       const pathArr: string[] = key.split("/");
       if (pathArr.length == 2) {
@@ -32,7 +33,7 @@ const unZip = async (zipFile: any) => {
 
 export { unZip };
 
-const objectToJson = (object: any, isDir: boolean) => {
+const objectToJson = async (object: any, isDir: boolean) => {
   const jsonObj = {
     name: "",
     isDir: false,
@@ -41,7 +42,7 @@ const objectToJson = (object: any, isDir: boolean) => {
   jsonObj.name = object.name;
   jsonObj.isDir = object.dir;
   if (!isDir) {
-    jsonObj.data = object._data.compressedContent.toString("base64");
+    jsonObj.data = await object.async("base64");
   }
   return jsonObj;
 };

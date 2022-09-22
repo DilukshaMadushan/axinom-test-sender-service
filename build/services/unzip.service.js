@@ -26,7 +26,7 @@ const unZip = (zipFile) => __awaiter(void 0, void 0, void 0, function* () {
     for (let key of keys) {
         const item = result.files[key];
         if (!item.dir) {
-            fileArr.push(objectToJson(item, item.dir));
+            fileArr.push(yield objectToJson(item, item.dir));
         }
         else {
             const pathArr = key.split("/");
@@ -39,7 +39,7 @@ const unZip = (zipFile) => __awaiter(void 0, void 0, void 0, function* () {
     return unZippedDataJson;
 });
 exports.unZip = unZip;
-const objectToJson = (object, isDir) => {
+const objectToJson = (object, isDir) => __awaiter(void 0, void 0, void 0, function* () {
     const jsonObj = {
         name: "",
         isDir: false,
@@ -48,7 +48,7 @@ const objectToJson = (object, isDir) => {
     jsonObj.name = object.name;
     jsonObj.isDir = object.dir;
     if (!isDir) {
-        jsonObj.data = object._data.compressedContent.toString("base64");
+        jsonObj.data = yield object.async("base64");
     }
     return jsonObj;
-};
+});

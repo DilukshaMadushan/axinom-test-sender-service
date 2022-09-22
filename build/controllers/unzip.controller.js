@@ -14,13 +14,21 @@ const unzip_service_1 = require("../services/unzip.service");
 const api_service_1 = require("../services/api.service");
 const auth_service_1 = require("../services/auth.service");
 const extractZipFile = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const files = req.files;
+    let files = req.files;
+    let fileArr;
+    if (Array.isArray(files.file)) {
+        fileArr = files.file;
+    }
+    else {
+        fileArr = [files.file];
+    }
     const outputArr = [];
     const output = {
         uploadOwner: req.body.uploadOwner,
         zipFiles: [],
     };
-    for (let zipFile of files.file) {
+    console.log(files);
+    for (let zipFile of fileArr) {
         const unZuppedRes = yield (0, unzip_service_1.unZip)(zipFile.data);
         outputArr.push(unZuppedRes);
     }

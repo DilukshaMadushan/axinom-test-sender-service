@@ -8,13 +8,21 @@ const extractZipFile = async (
   res: Response,
   next: NextFunction
 ) => {
-  const files: any = req.files;
+  let files: any = req.files;
+  let fileArr: any;
+  if (Array.isArray(files.file)) {
+    fileArr = files.file;
+  } else {
+    fileArr = [files.file];
+  }
+
   const outputArr: any = [];
   const output: any = {
     uploadOwner: req.body.uploadOwner,
     zipFiles: [],
   };
-  for (let zipFile of files.file) {
+
+  for (let zipFile of fileArr) {
     const unZuppedRes = await unZip(zipFile.data);
     outputArr.push(unZuppedRes);
   }
